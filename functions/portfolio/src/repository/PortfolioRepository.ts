@@ -1,7 +1,10 @@
 import {DocumentClient} from "aws-sdk/lib/dynamodb/document_client";
 import {Portfolio} from "../domain/Portfolio";
 import AttributeMap = DocumentClient.AttributeMap;
-import {IPortfolioRepository} from "./IPortfolioRepository";
+
+export interface IPortfolioRepository {
+    findById(tenantId :string, id: string) : Promise<Portfolio | undefined>
+}
 
 export class PortfolioRepository implements IPortfolioRepository {
     readonly tableName = "PORTFOLIO"

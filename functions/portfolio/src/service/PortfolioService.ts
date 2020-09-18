@@ -1,9 +1,12 @@
-import {IPortfolioRepository} from "../repository/IPortfolioRepository";
 import {Result} from "../../../../shared/result/Result";
 
 import {Portfolio} from "../domain/Portfolio";
 import {NotFoundError} from "../../../../shared/errors/Errors";
-import {IPortfolioService} from "./IPortfolioService";
+import {IPortfolioRepository} from "../repository/PortfolioRepository";
+
+export interface IPortfolioService {
+    findById(tenantId : string, id : string) : Promise<Result<Portfolio> | Result<NotFoundError>>
+}
 
 export class PortfolioService implements IPortfolioService {
     readonly portfolioRepository :  IPortfolioRepository
