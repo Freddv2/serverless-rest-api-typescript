@@ -74,7 +74,7 @@
   "exclude": [
     "./**/node_modules",
     "./**/dist",
-    "./**/*.spec.ts",
-    "./**/*.spec.js"
+    "**/*.test.ts",
+    "**/*.spec.ts"
   ]
 }
