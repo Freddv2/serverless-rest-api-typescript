@@ -26,10 +26,13 @@ export class PortfolioRepository implements IPortfolioRepository {
     }
 
      private itemToPortfolio(item : AttributeMap) : Portfolio {
-         let portfolio = new Portfolio(item["tenantId"],item["id"],item["name"])
-         portfolio.description = item["tenantId"]
-         portfolio.assets = item["assets"]
-         portfolio.creationDate = item["creationDate"]
-         return portfolio
+        return {
+            tenantId: item["tenantId"],
+            id: item["id"],
+            name: item["name"],
+            description: item["description"],
+            assets: item["assets"],
+            creationDate: item["creationDate"]
+        }
      }
 }
