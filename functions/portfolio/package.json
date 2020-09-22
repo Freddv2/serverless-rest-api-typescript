@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "jest --coverage",
+    "test": "jest",
     "view:coverage": "serve coverage/lcov-report"
   },
   "repository": {
@@ -19,20 +19,27 @@
   },
   "homepage": "https://github.com/Freddv2/serverless-rest-api-typescript#readme",
   "devDependencies": {
-    "@tsconfig/node12": "^1.0.7",
-    "@types/aws-serverless-express": "^3.3.3",
-    "@types/cors": "^2.8.7",
-    "@types/express": "^4.17.8",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@tsconfig/node12": "*",
+    "@types/aws-serverless-express": "*",
+    "@types/cors": "*",
+    "@types/express": "*",
     "@types/jest": "^26.0.14",
-    "@types/node": "^14.6.4",
+    "@types/node": "^14.11.2",
+    "babel-jest": "^26.3.0",
+    "chai": "*",
     "jest": "^26.4.2",
     "ts-jest": "^26.4.0",
-    "ts-mockito": "^2.6.1"
+    "ts-mockito": "*",
+    "typescript": "^4.0.3"
   },
   "dependencies": {
-    "aws-sdk": "^2.751.0",
-    "aws-serverless-express": "^3.3.8",
-    "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "@types/chai": "^4.2.12",
+    "aws-sdk": "^2.757.0",
+    "aws-serverless-express": "*",
+    "cors": "*",
+    "express": "*"
   }
 }
