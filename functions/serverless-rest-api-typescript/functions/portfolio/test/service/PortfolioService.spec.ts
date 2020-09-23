@@ -1,7 +1,7 @@
 import {PortfolioService} from "../../src/service/PortfolioService";
 import {PortfolioRepository} from "../../src/repository/PortfolioRepository";
 import {instance, mock, when} from "ts-mockito";
-import { assert } from "chai"
+import {assert} from "chai"
 import {testPortfolio1} from "../test-data";
 
 describe('Portfolio Service', () => {
