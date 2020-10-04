@@ -8,11 +8,11 @@ import {EnvironmentCredentials} from "aws-sdk";
 import DynamoDB, {DocumentClient} from "aws-sdk/clients/dynamodb";
 
 const dynamodb = initDynamoDB()
-const App = initExpress();
+const app = initExpress();
 
 const repo = new PortfolioRepository(dynamodb)
 const service = new PortfolioService(repo)
-const controller = new PortfolioController(App, service)
+const controller = new PortfolioController(app, service)
 
 controller.defineRoutes()
 
@@ -46,4 +46,4 @@ function initDynamoDB() : DocumentClient {
     })
 }
 
-export {App}
+export {app}
