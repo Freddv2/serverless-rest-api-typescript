@@ -5,6 +5,10 @@
   "author": "fvincent <fvincent@okiok.com>",
   "license": "MIT",
   "private": true,
+  "workspaces": [
+    "functions/*",
+    "libs/*"
+  ],
   "scripts": {
     "docs": "doctoc --title '**Table of content**' README.md",
     "clean": "lerna run clean",
