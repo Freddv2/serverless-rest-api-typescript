@@ -5,9 +5,15 @@
   "author": "fvincent <fvincent@okiok.com>",
   "license": "MIT",
   "private": true,
-  "scripts": {},
-  "devDependencies": {
-    "lerna": "^3.22.1"
+  "scripts": {
+    "docs": "doctoc --title '**Table of content**' README.md",
+    "clean": "lerna run clean",
+    "build": "lerna run build",
+    "pub": "lerna publish",
+    "test": "lerna run test"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "lerna": "^3.22.1",
+    "typescript": "^4.0.3"
+  }
 }

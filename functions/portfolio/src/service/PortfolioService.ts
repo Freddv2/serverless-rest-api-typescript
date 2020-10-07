@@ -1,7 +1,7 @@
-import {Result} from "../../../../shared/result/Result";
+import {Result} from "../../../../libs/commons/src/Result";
 
 import {Portfolio} from "../domain/Portfolio";
-import {NotFoundError} from "../../../../shared/errors/Errors";
+import {NotFoundError} from "../../../../libs/commons/src/Errors";
 import {IPortfolioRepository} from "../repository/PortfolioRepository";
 
 export interface IPortfolioService {
