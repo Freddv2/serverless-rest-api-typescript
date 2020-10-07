@@ -1,4 +1,4 @@
-import {Result} from "../result/Result";
+import {Result} from "./Result";
 
 interface AppError {
     message: string;

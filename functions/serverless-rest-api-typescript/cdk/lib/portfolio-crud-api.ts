@@ -3,10 +3,9 @@ import {AttributeType, Table} from '@aws-cdk/aws-dynamodb';
 import {Construct} from "@aws-cdk/core";
 import {WebpackFunction} from "aws-cdk-webpack-lambda-function";
 
-export interface PortfolioCRUDRestAPIProps{}
 
 export class PortfolioCRUDRestAPI extends Construct {
-    constructor(scope: Construct, id: string, props: PortfolioCRUDRestAPIProps) {
+    constructor(scope: Construct, id: string) {
         super(scope, id);
 
         const func = new WebpackFunction(this,id,{
