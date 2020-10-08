@@ -1,44 +1,22 @@
 {
-  "name": "portfolio",
+  "name": "@dv2/portfolio",
   "version": "1.0.0",
-  "description": "Serverless Typescript Rest API",
-  "main": "./src/app.ts",
   "scripts": {
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./build",
     "compile": "tsc -p tsconfig.build.json",
     "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Freddv2/serverless-rest-api-typescript.git"
-  },
-  "author": "fvincent",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Freddv2/serverless-rest-api-typescript/issues"
-  },
-  "homepage": "https://github.com/Freddv2/serverless-rest-api-typescript#readme",
   "devDependencies": {
-    "@tsconfig/node12": "*",
     "@types/aws-serverless-express": "*",
-    "@types/chai": "^4.2.12",
     "@types/cors": "*",
-    "@types/express": "*",
-    "@types/jest": "^26.0.14",
-    "@types/node": "^14.11.2",
-    "chai": "*",
-    "jest": "^26.4.2",
-    "rimraf": "^3.0.2",
-    "ts-jest": "^26.4.0",
-    "ts-loader": "^8.0.4",
-    "ts-mockito": "*",
-    "typescript": "^4.0.3"
+    "@types/express": "*"
   },
   "dependencies": {
-    "aws-sdk": "^2.757.0",
+    "aws-sdk": "*",
     "aws-serverless-express": "*",
     "cors": "*",
-    "express": "*"
+    "express": "*",
+    "@dv2/commons": "1.0.0"
   }
 }

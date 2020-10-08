@@ -1,1 +1,0 @@
-# serverless-rest-api-typescript

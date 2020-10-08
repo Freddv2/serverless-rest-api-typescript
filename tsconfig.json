@@ -1,9 +1,10 @@
 {
   "extends": "./tsconfig.build.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "@freddv2/portfolio": ["functions/portfolio/src"],
-      "@freddv2/commons": ["libs/commons/src"]
+      "@dv2/portfolio": ["functions/portfolio/src"],
+      "@dv2/commons": ["libs/commons/src"]
     }
   }
   }
