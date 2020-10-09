@@ -1,6 +1,7 @@
 {
   "name": "serverless-rest-api-typescript",
   "version": "1.0.0",
+  "description": "Serverless Typescript Rest API",
   "repository": "https://github.com/Freddv2/serverless-rest-api-typescript.git",
   "author": "fvincent <fvincent@okiok.com>",
   "license": "MIT",
@@ -17,9 +18,17 @@
     "test": "lerna run test"
   },
   "devDependencies": {
-    "typescript": "^4.0.3"
-  },
-  "dependencies": {
-    "lerna": "^3.22.1"
+    "@tsconfig/node12": "*",
+    "@types/chai": "^4.2.12",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.2",
+    "lerna": "*",
+    "typescript": "*",
+    "chai": "*",
+    "jest": "^26.4.2",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.4.0",
+    "ts-loader": "^8.0.4",
+    "ts-mockito": "*"
   }
 }
