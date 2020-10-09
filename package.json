@@ -13,8 +13,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna run clean",
-    "build": "lerna run build",
-    "test": "lerna run test"
+    "build": "lerna run build --stream",
+    "test": "lerna run test --stream"
   },
   "devDependencies": {
     "@tsconfig/node12": "*",
