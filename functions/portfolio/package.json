@@ -4,7 +4,7 @@
   "scripts": {
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./build",
-    "compile": "tsc -p tsconfig.build.json",
+    "compile": "tsc",
     "test": "jest"
   },
   "devDependencies": {

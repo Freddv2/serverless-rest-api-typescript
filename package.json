@@ -11,10 +11,9 @@
     "libs/*"
   ],
   "scripts": {
-    "docs": "doctoc --title '**Table of content**' README.md",
+    "bootstrap": "lerna bootstrap",
     "clean": "lerna run clean",
     "build": "lerna run build",
-    "pub": "lerna publish",
     "test": "lerna run test"
   },
   "devDependencies": {
