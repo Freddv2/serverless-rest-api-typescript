@@ -1,7 +1,7 @@
 import {Portfolio} from "../src/domain/Portfolio";
 
 const testTenant = "TestTenant"
-let testPortfolio1: Portfolio = {
+const testPortfolio1: Portfolio = {
     tenantId: testTenant,
     id: "1",
     name: "RSP",
@@ -11,7 +11,7 @@ let testPortfolio1: Portfolio = {
         {symbol:"SPY",weight:50}]
 }
 
-let testPortfolio2: Portfolio = {
+const testPortfolio2: Portfolio = {
     tenantId: testTenant,
     id: "2",
     name: "TFSA",

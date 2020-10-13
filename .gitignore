@@ -1,15 +1,16 @@
 # GENERAL
 build
-
+*.log
 #IDEA
 .idea
 
 #JS
 *.js
+*.d.ts
+*.map
 !jest.config.js
 !webpack.config.js
-
-*.d.ts
+!decs.d.ts
 node_modules
 
 #CDK
