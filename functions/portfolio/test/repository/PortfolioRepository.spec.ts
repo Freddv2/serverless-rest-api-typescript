@@ -4,34 +4,22 @@ import {PortfolioRepository} from "../../src/repository/PortfolioRepository";
 import {testPortfolio1} from "../test-data";
 import {assert} from "chai";
 import DynamoDB from "aws-sdk/clients/dynamodb";
-import {EnvironmentCredentials} from "aws-sdk";
 
 describe('Portfolio Repository', () => {
-    const port = 8001
+    const port = 8002
     let testDynamoDB : DynamoDB
     let testDocumentClient : DocumentClient
     let portfolioRepository : PortfolioRepository
 
     beforeAll(async () => {
-        try {
-            await DynamoDbLocal.launch(port, null, ['-sharedDb'], true)
-        } catch (e) {
-            console.error(e)
-            process.exit()
-        }
+        await DynamoDbLocal.launch(port, null, ['-sharedDb'], true)
     })
 
     beforeEach(async () => {
-        try {
-            testDynamoDB = initTestDynamoDBClient(port)
-            testDocumentClient = initTestDocumentClient(testDynamoDB)
-            await createTable(testDynamoDB);
-            portfolioRepository = new PortfolioRepository(testDocumentClient);
-        } catch (e) {
-            console.error(e)
-            process.exit()
-        }
-
+        testDynamoDB = initTestDynamoDBClient(port)
+        testDocumentClient = initTestDocumentClient(testDynamoDB)
+        await createTable(testDynamoDB);
+        portfolioRepository = new PortfolioRepository(testDocumentClient);
     })
 
     it('should find by ID, when it doest not exists', async () => {
@@ -51,7 +39,6 @@ describe('Portfolio Repository', () => {
 function initTestDynamoDBClient(port : number) {
     return new DynamoDB({
         endpointDiscoveryEnabled: false,
-        credentials: new EnvironmentCredentials('AWS'),
         endpoint: 'localhost:'+port,
         sslEnabled: false,
         region: 'local-env'
