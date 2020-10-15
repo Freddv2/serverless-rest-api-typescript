@@ -4,19 +4,34 @@ import {PortfolioRepository} from "../../src/repository/PortfolioRepository";
 import {testPortfolio1} from "../test-data";
 import {assert} from "chai";
 import DynamoDB from "aws-sdk/clients/dynamodb";
+import {EnvironmentCredentials} from "aws-sdk";
 
 describe('Portfolio Repository', () => {
-    const port = 8000
+    const port = 8001
     let testDynamoDB : DynamoDB
     let testDocumentClient : DocumentClient
     let portfolioRepository : PortfolioRepository
 
-    beforeAll(() => {
-        DynamoDbLocal.launch(port,null,['-sharedDb'],true)
-        testDynamoDB = new DynamoDB()
-        testDocumentClient = initTestDynamoDBClient(port)
-        createTable(testDynamoDB)
-        portfolioRepository = new PortfolioRepository(testDocumentClient)
+    beforeAll(async () => {
+        try {
+            await DynamoDbLocal.launch(port, null, ['-sharedDb'], true)
+        } catch (e) {
+            console.error(e)
+            process.exit()
+        }
+    })
+
+    beforeEach(async () => {
+        try {
+            testDynamoDB = initTestDynamoDBClient(port)
+            testDocumentClient = initTestDocumentClient(testDynamoDB)
+            await createTable(testDynamoDB);
+            portfolioRepository = new PortfolioRepository(testDocumentClient);
+        } catch (e) {
+            console.error(e)
+            process.exit()
+        }
+
     })
 
     it('should find by ID, when it doest not exists', async () => {
@@ -24,22 +39,35 @@ describe('Portfolio Repository', () => {
         assert.isUndefined(portfolio)
     })
 
+    afterEach(async () => {
+        await testDynamoDB.deleteTable().promise()
+    })
+
     afterAll(() => {
         DynamoDbLocal.stop(port)
     })
 })
 
-function initTestDynamoDBClient(port : number) : DocumentClient {
+function initTestDynamoDBClient(port : number) {
+    return new DynamoDB({
+        endpointDiscoveryEnabled: false,
+        credentials: new EnvironmentCredentials('AWS'),
+        endpoint: 'localhost:'+port,
+        sslEnabled: false,
+        region: 'local-env'
+    })
+}
+function initTestDocumentClient(dynamodbClient : DynamoDB) {
     return new DynamoDB.DocumentClient({
         convertEmptyValues: true,
-            endpoint: 'localhost:'+port,
-            sslEnabled: false,
-            region: 'local-env',
+        endpoint: dynamodbClient.config.endpoint,
+        sslEnabled: dynamodbClient.config.sslEnabled,
+        region: dynamodbClient.config.region,
     });
 }
 
 function createTable(dynamoDBClient : DynamoDB) {
-    dynamoDBClient.createTable({
+    return dynamoDBClient.createTable({
         TableName: 'DV2',
         KeySchema: [
             {'AttributeName': 'pk', KeyType: 'HASH'},
@@ -53,9 +81,5 @@ function createTable(dynamoDBClient : DynamoDB) {
             ReadCapacityUnits:1,
             WriteCapacityUnits:1
         }
-    })
-}
-
-function dropTable() {
-
+    }).promise();
 }
