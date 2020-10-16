@@ -1,5 +1,6 @@
 import {DocumentClient} from "aws-sdk/lib/dynamodb/document_client";
 import {Portfolio} from "../domain/Portfolio";
+
 const {Table,Entity} = require('dynamodb-toolbox')
 
 export interface IPortfolioRepository {
@@ -11,6 +12,7 @@ export class PortfolioRepository implements IPortfolioRepository {
     readonly documentClient : DocumentClient
     readonly table : any
     readonly entity : any
+
     constructor(documentClient: DocumentClient) {
         this.documentClient = documentClient
         this.table = this.createTableDefinition(documentClient)

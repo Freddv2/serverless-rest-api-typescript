@@ -12,23 +12,23 @@ describe('Portfolio Repository', () => {
     let portfolioRepository : PortfolioRepository
 
     beforeAll(async () => {
-        await DynamoDbLocal.launch(port, null, ['-sharedDb'], true)
+        await DynamoDbLocal.launch(port, null, ['-sharedDb', '-inMemory'], true)
     })
 
     beforeEach(async () => {
         testDynamoDB = initTestDynamoDBClient(port)
         testDocumentClient = initTestDocumentClient(testDynamoDB)
-        await createTable(testDynamoDB);
+        await createTableIfNotExists(testDynamoDB);
         portfolioRepository = new PortfolioRepository(testDocumentClient);
     })
 
     it('should find by ID, when it doest not exists', async () => {
         const portfolio = await portfolioRepository.findById(testPortfolio1.tenantId,'999')
-        assert.isUndefined(portfolio)
+        assert.isEmpty(portfolio)
     })
 
     afterEach(async () => {
-        await testDynamoDB.deleteTable().promise()
+        await deleteTableIfExists(testDynamoDB)
     })
 
     afterAll(() => {
@@ -44,7 +44,8 @@ function initTestDynamoDBClient(port : number) {
         region: 'local-env'
     })
 }
-function initTestDocumentClient(dynamodbClient : DynamoDB) {
+
+function initTestDocumentClient(dynamodbClient: DynamoDB) {
     return new DynamoDB.DocumentClient({
         convertEmptyValues: true,
         endpoint: dynamodbClient.config.endpoint,
@@ -53,8 +54,28 @@ function initTestDocumentClient(dynamodbClient : DynamoDB) {
     });
 }
 
-function createTable(dynamoDBClient : DynamoDB) {
-    return dynamoDBClient.createTable({
+async function tableExists(tableName: string, dynamoDB: DynamoDB) {
+    const listTable = await dynamoDB.listTables().promise()
+    if (listTable.TableNames) {
+        return listTable.TableNames.some(name => name === tableName)
+    }
+    return false
+}
+
+async function createTableIfNotExists(dynamoDB: DynamoDB) {
+    const tableName = 'DV2'
+    const exist = await tableExists(tableName, dynamoDB)
+    return exist ? Promise.resolve() : await createTable(dynamoDB)
+}
+
+async function deleteTableIfExists(dynamoDB: DynamoDB) {
+    const tableName = 'DV2'
+    const exist = await tableExists(tableName, dynamoDB)
+    return exist ? await dynamoDB.deleteTable({TableName: 'DV2'}) : Promise.resolve()
+}
+
+async function createTable(dynamoDB: DynamoDB) {
+    return dynamoDB.createTable({
         TableName: 'DV2',
         KeySchema: [
             {'AttributeName': 'pk', KeyType: 'HASH'},
@@ -62,7 +83,7 @@ function createTable(dynamoDBClient : DynamoDB) {
         ],
         AttributeDefinitions: [
             {'AttributeName': 'pk', AttributeType: 'S'},
-            {'AttributeName': 'sk', AttributeType: 'RANGE'},
+            {'AttributeName': 'sk', AttributeType: 'S'},
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits:1,
