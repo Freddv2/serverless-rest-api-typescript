@@ -7,5 +7,12 @@
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./build",
     "compile": "tsc"
+  },
+  "devDependencies": {
+    "@dv2/test-dynamodb": "^1.0.0",
+    "dynamodb-local": "^0.0.31"
+  },
+  "dependencies": {
+    "@dv2/table-definition": "^1.0.0"
   }
 }

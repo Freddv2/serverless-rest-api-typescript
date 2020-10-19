@@ -1,18 +1,15 @@
 import DynamoDbLocal from 'dynamodb-local'
-import {DocumentClient} from "aws-sdk/lib/dynamodb/document_client";
 import {PortfolioRepository} from "../../src/repository/PortfolioRepository";
 import {testPortfolio1} from "../test-data";
 import {assert} from "chai";
 import DynamoDB from "aws-sdk/clients/dynamodb";
+import {LocalDynamoDBServer} from "../../../../tests/test-dynamodb/src/LocalDynamoDBServer";
 
 describe('Portfolio Repository', () => {
-    const port = 8002
-    let testDynamoDB : DynamoDB
-    let testDocumentClient : DocumentClient
-    let portfolioRepository : PortfolioRepository
+    const localDynamoDB = new LocalDynamoDBServer()
 
     beforeAll(async () => {
-        await DynamoDbLocal.launch(port, null, ['-sharedDb', '-inMemory'], true)
+        await localDynamoDB.start()
     })
 
     beforeEach(async () => {

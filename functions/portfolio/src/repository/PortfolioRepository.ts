@@ -1,5 +1,6 @@
 import {DocumentClient} from "aws-sdk/lib/dynamodb/document_client";
 import {Portfolio} from "../domain/Portfolio";
+import {TableDefinition} from "@dv2/table-definition";
 
 const {Table,Entity} = require('dynamodb-toolbox')
 
@@ -8,7 +9,6 @@ export interface IPortfolioRepository {
 }
 
 export class PortfolioRepository implements IPortfolioRepository {
-    readonly tableName = "PORTFOLIO"
     readonly documentClient : DocumentClient
     readonly table : any
     readonly entity : any
@@ -48,14 +48,14 @@ export class PortfolioRepository implements IPortfolioRepository {
 
     private createTableDefinition(client : DocumentClient) : any {
         return new Table({
-            name: 'DV2',
-            partitionKey: 'pk',
-            sortKey: 'sk',
+            name: TableDefinition.tableName,
+            partitionKey: TableDefinition.pk,
+            sortKey: TableDefinition.sk,
             DocumentClient: client
         })
     }
-
     private createPortfolioEntity(table : typeof Table) : any {
+
         return new Entity({
            name: 'Portfolio',
            attributes: {

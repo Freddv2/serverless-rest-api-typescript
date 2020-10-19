@@ -7,8 +7,9 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "functions/*",
-    "libs/*"
+    "functions/**",
+    "libs/**",
+    "tests/**"
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",

@@ -3,8 +3,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      //functions
       "@dv2/portfolio": ["functions/portfolio/src"],
-      "@dv2/commons": ["libs/commons/src"]
+
+      //libs
+      "@dv2/commons": ["libs/commons/src"],
+
+      //libs/dynamodb
+      "@dv2/table-definition": ["libs/dynamodb/table-definition/src"],
+
+      //test
+      "@dv2/test-dynamodb" : ["tests/test-dynamodb/src"]
     }
   }
 }
