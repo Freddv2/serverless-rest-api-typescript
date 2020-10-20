@@ -2,6 +2,16 @@
   "name": "@dv2/test-dynamodb",
   "version": "1.0.0",
   "private": true,
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.build.json"
+  },
   "dependencies": {
     "@dv2/table-definition": "^1.0.0",
     "dynamodb-local": "^0.0.31",
