@@ -1,21 +1,28 @@
 import DynamoDbLocal from "dynamodb-local";
-import getPort = require("get-port");
-import DynamoDB, { DocumentClient } from "aws-sdk/clients/dynamodb";
+import DynamoDB, {DocumentClient} from "aws-sdk/clients/dynamodb";
+import {TableDefinition} from "@dv2/table-definition";
+import getPortSync = require("get-port-sync");
 
 export class LocalDynamoDBServer {
-    port!: number
-    dynamoDBClient!: DynamoDB
-    documentClient!: DocumentClient
+    readonly port: number
+    readonly dynamoDBClient: DynamoDB
+    readonly documentClient: DocumentClient
 
-    async start(port? : number) {
-        this.port = port ? port : await getPort();
-        await DynamoDbLocal.launch(this.port, null, ['-sharedDb', '-inMemory'], true)
+
+    constructor(port?: number) {
+        this.port = port ? port : getPortSync()
         this.dynamoDBClient = this.initDynamoDBClient()
         this.documentClient = this.initDocumentClient()
     }
 
+    async start() {
+        await DynamoDbLocal.launch(this.port, null, ['-sharedDb', '-inMemory'], true)
+        return this
+    }
+
     stop() {
         DynamoDbLocal.stop(this.port)
+        return this
     }
 
     async createTableIfNotExists(tableName: string) {
@@ -24,14 +31,14 @@ export class LocalDynamoDBServer {
             return Promise.resolve()
         } else {
             return await this.dynamoDBClient.createTable({
-                TableName: 'DV2',
+                TableName: TableDefinition.tableName,
                 KeySchema: [
-                    {'AttributeName': 'pk', KeyType: 'HASH'},
-                    {'AttributeName': 'sk', KeyType: 'RANGE'},
+                    {'AttributeName': TableDefinition.pk, KeyType: 'HASH'},
+                    {'AttributeName': TableDefinition.sk, KeyType: 'RANGE'},
                 ],
                 AttributeDefinitions: [
-                    {'AttributeName': 'pk', AttributeType: 'S'},
-                    {'AttributeName': 'sk', AttributeType: 'S'},
+                    {'AttributeName': TableDefinition.pk, AttributeType: 'S'},
+                    {'AttributeName': TableDefinition.sk, AttributeType: 'S'},
                 ],
                 ProvisionedThroughput: {
                     ReadCapacityUnits: 1,

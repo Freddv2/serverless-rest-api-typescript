@@ -1,22 +1,23 @@
 import DynamoDbLocal from 'dynamodb-local'
-import {PortfolioRepository} from "../../src/repository/PortfolioRepository";
+
 import {testPortfolio1} from "../test-data";
 import {assert} from "chai";
 import DynamoDB from "aws-sdk/clients/dynamodb";
 import {LocalDynamoDBServer} from "@dv2/test-dynamodb";
+import {TableDefinition} from "@dv2/table-definition";
+import {PortfolioRepository} from "../../src/repository/PortfolioRepository";
 
 describe('Portfolio Repository', () => {
-    const localDynamoDB = new LocalDynamoDBServer()
+    let localDynamoDB = new LocalDynamoDBServer()
+    let portfolioRepository
 
     beforeAll(async () => {
-        await localDynamoDB.start()
+        localDynamoDB = await new LocalDynamoDBServer().start()
     })
 
     beforeEach(async () => {
-        testDynamoDB = initTestDynamoDBClient(port)
-        testDocumentClient = initTestDocumentClient(testDynamoDB)
-        await createTableIfNotExists(testDynamoDB);
-        portfolioRepository = new PortfolioRepository(testDocumentClient);
+        await localDynamoDB.createTableIfNotExists(TableDefinition.tableName)
+        portfolioRepository = new PortfolioRepository(localDynamoDB.documentClient);
     })
 
     it('should find by ID, when it doest not exists', async () => {

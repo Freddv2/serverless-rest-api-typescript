@@ -15,7 +15,8 @@
   "dependencies": {
     "@dv2/table-definition": "^1.0.0",
     "dynamodb-local": "^0.0.31",
-    "get-port": "^5.1.1"
+    "get-port": "^5.1.1",
+    "get-port-sync": "^1.0.1"
   },
   "devDependencies": {
     "dynamodb-local": "^0.0.31"
