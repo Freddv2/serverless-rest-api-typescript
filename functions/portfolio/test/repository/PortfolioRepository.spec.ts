@@ -3,7 +3,7 @@ import {PortfolioRepository} from "../../src/repository/PortfolioRepository";
 import {testPortfolio1} from "../test-data";
 import {assert} from "chai";
 import DynamoDB from "aws-sdk/clients/dynamodb";
-import {LocalDynamoDBServer} from "../../../../tests/test-dynamodb/src/LocalDynamoDBServer";
+import {LocalDynamoDBServer} from "@dv2/test-dynamodb";
 
 describe('Portfolio Repository', () => {
     const localDynamoDB = new LocalDynamoDBServer()
