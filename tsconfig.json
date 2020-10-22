@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig.build.json",
+  "extends": "./tsconfig.build.json",
   "baseUrl": ".",
   "paths": {
     //functions
@@ -10,9 +10,8 @@
     "@dv2/commons": [
       "libs/commons/src"
     ],
-    //libs/dynamodb
     "@dv2/table-definition": [
-      "libs/dynamodb/table-definition/src"
+      "@dv2/table-definition/src/TableDefinition/src"
     ],
     //test
     "@dv2/test-dynamodb": [

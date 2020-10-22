@@ -1,13 +1,13 @@
 {
   "name": "@dv2/commons",
   "version": "1.0.0",
-  "author": "fvincent",
-  "private": true,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/index",
+  "types": "dist/index",
   "files": [
     "dist"
   ],
+  "author": "fvincent",
+  "private": true,
   "scripts": {
     "build": "yarn run clean && yarn run compile",
     "clean": "rimraf -rf ./dist",

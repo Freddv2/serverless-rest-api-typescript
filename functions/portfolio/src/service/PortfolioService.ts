@@ -1,12 +1,14 @@
 import {Portfolio} from "../domain/Portfolio";
 import {IPortfolioRepository} from "../repository/PortfolioRepository";
+import {NotFoundError, Result} from "@dv2/commons";
+
 
 export interface IPortfolioService {
-    findById(tenantId : string, id : string) : Promise<Result<Portfolio> | Result<NotFoundError>>
+    findById(tenantId: string, id: string): Promise<Result<Portfolio> | Result<NotFoundError>>
 }
 
 export class PortfolioService implements IPortfolioService {
-    readonly portfolioRepository :  IPortfolioRepository
+    readonly portfolioRepository: IPortfolioRepository
 
     constructor(portfolioRepository: IPortfolioRepository) {
         this.portfolioRepository = portfolioRepository;
