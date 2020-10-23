@@ -1,7 +1,7 @@
 import {Portfolio} from "../domain/Portfolio";
 import {IPortfolioRepository} from "../repository/PortfolioRepository";
-import {NotFoundError, Result} from "@dv2/commons";
-
+import {Result} from "@dv2/commons/src/Result";
+import {NotFoundError} from "@dv2/commons/src/Errors";
 
 export interface IPortfolioService {
     findById(tenantId: string, id: string): Promise<Result<Portfolio> | Result<NotFoundError>>

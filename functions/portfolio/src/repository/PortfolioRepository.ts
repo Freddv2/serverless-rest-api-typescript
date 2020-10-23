@@ -1,6 +1,6 @@
 import {DocumentClient} from "aws-sdk/lib/dynamodb/document_client";
 import {Portfolio} from "../domain/Portfolio";
-import {TableDefinition} from "@dv2/table-definition";
+import {TableDefinition} from "@dv2/table-definition/src/TableDefinition";
 
 const {Table,Entity} = require('dynamodb-toolbox')
 

@@ -1,6 +1,6 @@
 import DynamoDbLocal from "dynamodb-local";
 import DynamoDB, {DocumentClient} from "aws-sdk/clients/dynamodb";
-import {TableDefinition} from "@dv2/table-definition";
+import {TableDefinition} from "@dv2/table-definition/src/TableDefinition";
 import getPortSync = require("get-port-sync");
 
 export class LocalDynamoDBServer {

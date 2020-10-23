@@ -2,15 +2,5 @@
   "name": "@dv2/table-definition",
   "description": "The dynamodb table definition of the application",
   "version": "1.0.0",
-  "private": true,
-  "main": "dist/index",
-  "types": "dist/index",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "yarn run clean && yarn run compile",
-    "clean": "rimraf -rf ./dist",
-    "compile": "tsc -p tsconfig.build.json"
-  }
+  "private": true
 }

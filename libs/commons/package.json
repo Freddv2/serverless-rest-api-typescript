@@ -1,23 +1,6 @@
 {
   "name": "@dv2/commons",
   "version": "1.0.0",
-  "main": "dist/index",
-  "types": "dist/index",
-  "files": [
-    "dist"
-  ],
   "author": "fvincent",
-  "private": true,
-  "scripts": {
-    "build": "yarn run clean && yarn run compile",
-    "clean": "rimraf -rf ./dist",
-    "compile": "tsc -p tsconfig.build.json"
-  },
-  "devDependencies": {
-    "@dv2/test-dynamodb": "^1.0.0",
-    "dynamodb-local": "^0.0.31"
-  },
-  "dependencies": {
-    "@dv2/table-definition": "^1.0.0"
-  }
+  "private": true
 }

@@ -1,21 +1,3 @@
 {
-  "extends": "./tsconfig.build.json",
-  "baseUrl": ".",
-  "paths": {
-    //functions
-    "@dv2/portfolio": [
-      "functions/portfolio/src"
-    ],
-    //libs
-    "@dv2/commons": [
-      "libs/commons/src"
-    ],
-    "@dv2/table-definition": [
-      "@dv2/table-definition/src/TableDefinition/src"
-    ],
-    //test
-    "@dv2/test-dynamodb": [
-      "tests/test-dynamodb/src"
-    ]
-  }
+  "extends": "./tsconfig.build.json"
 }

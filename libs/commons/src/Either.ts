@@ -1,6 +1,6 @@
-export type Either<L, A> = Left<L, A> | Right<L, A>;
+type Either<L, A> = Left<L, A> | Right<L, A>;
 
-export class Left<L, A> {
+class Left<L, A> {
     readonly value: L;
 
     constructor(value: L) {
@@ -16,7 +16,7 @@ export class Left<L, A> {
     }
 }
 
-export class Right<L, A> {
+class Right<L, A> {
     readonly value: A;
 
     constructor(value: A) {
@@ -32,10 +32,10 @@ export class Right<L, A> {
     }
 }
 
-export const left = <L, A>(l: L): Either<L, A> => {
+const left = <L, A>(l: L): Either<L, A> => {
     return new Left(l);
 };
 
-export const right = <L, A>(a: A): Either<L, A> => {
+const right = <L, A>(a: A): Either<L, A> => {
     return new Right<L, A>(a);
 };
