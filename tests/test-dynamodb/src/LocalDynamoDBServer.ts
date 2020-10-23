@@ -25,9 +25,9 @@ export class LocalDynamoDBServer {
         return this
     }
 
-    async createTableIfNotExists(tableName: string) {
-        const exist = await this.tableExists(tableName)
-        if(exist) {
+    async createTableIfNotExists() {
+        const exist = await this.tableExists()
+        if (exist) {
             return Promise.resolve()
         } else {
             return await this.dynamoDBClient.createTable({
@@ -48,15 +48,15 @@ export class LocalDynamoDBServer {
         }
     }
 
-    async deleteTableIfExists(tableName: string) {
-        const exist = await this.tableExists(tableName)
-        return exist ? this.dynamoDBClient.deleteTable({TableName: tableName}).promise() : Promise.resolve()
+    async deleteTableIfExists() {
+        const exist = await this.tableExists()
+        return exist ? this.dynamoDBClient.deleteTable({TableName: TableDefinition.tableName}).promise() : Promise.resolve()
     }
 
-    async tableExists(tableName: string) {
+    async tableExists() {
         const listTable = await this.dynamoDBClient.listTables().promise()
         if (listTable.TableNames) {
-            return listTable.TableNames.some(name => name === tableName)
+            return listTable.TableNames.some(name => name === TableDefinition.tableName)
         }
         return false
     }

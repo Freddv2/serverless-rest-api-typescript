@@ -1,22 +1,18 @@
-import DynamoDbLocal from 'dynamodb-local'
-
 import {testPortfolio1} from "../test-data";
 import {assert} from "chai";
-import DynamoDB from "aws-sdk/clients/dynamodb";
-import {LocalDynamoDBServer} from "@dv2/test-dynamodb";
-import {TableDefinition} from "@dv2/table-definition";
 import {PortfolioRepository} from "../../src/repository/PortfolioRepository";
+import {LocalDynamoDBServer} from "@dv2/test-dynamodb/src/LocalDynamoDBServer";
 
 describe('Portfolio Repository', () => {
-    let localDynamoDB = new LocalDynamoDBServer()
-    let portfolioRepository
+    let localDynamoDB: LocalDynamoDBServer
+    let portfolioRepository: PortfolioRepository
 
     beforeAll(async () => {
         localDynamoDB = await new LocalDynamoDBServer().start()
     })
 
     beforeEach(async () => {
-        await localDynamoDB.createTableIfNotExists(TableDefinition.tableName)
+        await localDynamoDB.createTableIfNotExists()
         portfolioRepository = new PortfolioRepository(localDynamoDB.documentClient);
     })
 
@@ -26,42 +22,10 @@ describe('Portfolio Repository', () => {
     })
 
     afterEach(async () => {
-        await deleteTableIfExists(testDynamoDB)
+        await localDynamoDB.deleteTableIfExists()
     })
 
     afterAll(() => {
-        DynamoDbLocal.stop(port)
+        localDynamoDB.stop()
     })
 })
-
-async function tableExists(tableName: string, dynamoDB: DynamoDB) {
-    const listTable = await dynamoDB.listTables().promise()
-    if (listTable.TableNames) {
-        return listTable.TableNames.some(name => name === tableName)
-    }
-    return false
-}
-
-async function deleteTableIfExists(dynamoDB: DynamoDB) {
-    const tableName = 'DV2'
-    const exist = await tableExists(tableName, dynamoDB)
-    return exist ? await dynamoDB.deleteTable({TableName: 'DV2'}) : Promise.resolve()
-}
-
-async function createTable(dynamoDB: DynamoDB) {
-    return dynamoDB.createTable({
-        TableName: 'DV2',
-        KeySchema: [
-            {'AttributeName': 'pk', KeyType: 'HASH'},
-            {'AttributeName': 'sk', KeyType: 'RANGE'},
-        ],
-        AttributeDefinitions: [
-            {'AttributeName': 'pk', AttributeType: 'S'},
-            {'AttributeName': 'sk', AttributeType: 'S'},
-        ],
-        ProvisionedThroughput: {
-            ReadCapacityUnits:1,
-            WriteCapacityUnits:1
-        }
-    }).promise();
-}
