@@ -20,10 +20,18 @@ export class PortfolioRepository implements IPortfolioRepository {
     }
 
     async findById(tenantId :string, id: string) : Promise<Portfolio | undefined> {
-        return await this.entity.get({
+        const item = await this.documentClient.get({
+            TableName: TableDefinition.tableName,
+            Key : {
+                pk  : tenantId,
+                sk: id
+            }
+        }).promise()
+        return item.Item ? JSON.parse(JSON.stringify(item.Item)) : undefined
+        /*return await this.entity.get({
             tenantId: tenantId,
             id: id
-        }) as Portfolio | undefined;
+        }) as Portfolio | undefined;*/
     }
         /*let result = await this.documentClient.get({
             TableName: this.tableName,

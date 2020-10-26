@@ -1,6 +1,6 @@
 export class TableDefinition {
-    static readonly tableName = 'DV2'
-    static readonly pk = 'pk'
-    static readonly sk = 'sk'
+    public static readonly tableName = 'DV2'
+    public static readonly pk = 'pk'
+    public static readonly sk = 'sk'
     private constructor() {}
 }

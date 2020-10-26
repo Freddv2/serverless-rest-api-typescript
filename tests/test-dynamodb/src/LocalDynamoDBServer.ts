@@ -1,21 +1,18 @@
 import DynamoDbLocal from "dynamodb-local";
 import DynamoDB, {DocumentClient} from "aws-sdk/clients/dynamodb";
 import {TableDefinition} from "@dv2/table-definition/src/TableDefinition";
-import getPortSync = require("get-port-sync");
+import getPort from "get-port"
 
 export class LocalDynamoDBServer {
-    readonly port: number
-    readonly dynamoDBClient: DynamoDB
-    readonly documentClient: DocumentClient
+    port!: number
+    dynamoDBClient!: DynamoDB
+    documentClient!: DocumentClient
 
-
-    constructor(port?: number) {
-        this.port = port ? port : getPortSync()
-        this.dynamoDBClient = this.initDynamoDBClient()
-        this.documentClient = this.initDocumentClient()
-    }
 
     async start() {
+        this.port = await getPort()
+        this.dynamoDBClient = this.initDynamoDBClient()
+        this.documentClient = this.initDocumentClient()
         await DynamoDbLocal.launch(this.port, null, ['-sharedDb', '-inMemory'], true)
         return this
     }
@@ -30,7 +27,7 @@ export class LocalDynamoDBServer {
         if (exist) {
             return Promise.resolve()
         } else {
-            return await this.dynamoDBClient.createTable({
+            return this.dynamoDBClient.createTable({
                 TableName: TableDefinition.tableName,
                 KeySchema: [
                     {'AttributeName': TableDefinition.pk, KeyType: 'HASH'},
@@ -44,7 +41,7 @@ export class LocalDynamoDBServer {
                     ReadCapacityUnits: 1,
                     WriteCapacityUnits: 1
                 }
-            })
+            }).promise()
         }
     }
 
@@ -76,5 +73,9 @@ export class LocalDynamoDBServer {
             sslEnabled: this.dynamoDBClient.config.sslEnabled,
             region: this.dynamoDBClient.config.region,
         });
+    }
+
+    async getAnyAvailablePort() : Promise<number> {
+        return getPort()
     }
 }
