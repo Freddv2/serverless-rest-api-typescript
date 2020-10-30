@@ -6,6 +6,7 @@ export interface Portfolio {
     name: string
     description?: string
     assets?: Asset[]
-    creationDate?: Date
+    created?: Date
+    modified?: Date
 }
 

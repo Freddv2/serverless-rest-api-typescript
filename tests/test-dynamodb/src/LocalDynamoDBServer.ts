@@ -2,24 +2,25 @@ import DynamoDbLocal from "dynamodb-local";
 import DynamoDB, {DocumentClient} from "aws-sdk/clients/dynamodb";
 import {TableDefinition} from "@dv2/table-definition/src/TableDefinition";
 import getPort from "get-port"
+import {ChildProcess} from "child_process";
+import kill from "tree-kill"
 
 export class LocalDynamoDBServer {
+    dynamoDBServer!: ChildProcess
     port!: number
     dynamoDBClient!: DynamoDB
     documentClient!: DocumentClient
-
 
     async start() {
         this.port = await getPort()
         this.dynamoDBClient = this.initDynamoDBClient()
         this.documentClient = this.initDocumentClient()
-        await DynamoDbLocal.launch(this.port, null, ['-sharedDb', '-inMemory'], true)
+        this.dynamoDBServer = await DynamoDbLocal.launch(this.port, null, ['-inMemory'], false, false)
         return this
     }
 
-    stop() {
-        DynamoDbLocal.stop(this.port)
-        return this
+    async stop() {
+        await kill(this.dynamoDBServer.pid)
     }
 
     async createTableIfNotExists() {
@@ -45,12 +46,12 @@ export class LocalDynamoDBServer {
         }
     }
 
-    async deleteTableIfExists() {
+    async deleteTableIfExists(): Promise<any> {
         const exist = await this.tableExists()
         return exist ? this.dynamoDBClient.deleteTable({TableName: TableDefinition.tableName}).promise() : Promise.resolve()
     }
 
-    async tableExists() {
+    async tableExists(): Promise<boolean> {
         const listTable = await this.dynamoDBClient.listTables().promise()
         if (listTable.TableNames) {
             return listTable.TableNames.some(name => name === TableDefinition.tableName)
@@ -58,24 +59,21 @@ export class LocalDynamoDBServer {
         return false
     }
 
-    private initDynamoDBClient() {
+    private initDynamoDBClient(): DynamoDB {
         return new DynamoDB({
             endpointDiscoveryEnabled: false,
-            endpoint: 'localhost:'+this.port,
+            endpoint: 'localhost:' + this.port,
             sslEnabled: false,
             region: 'local-env'
         })
     }
-    private initDocumentClient() {
+
+    private initDocumentClient(): DocumentClient {
         return new DynamoDB.DocumentClient({
             convertEmptyValues: true,
             endpoint: this.dynamoDBClient.config.endpoint,
             sslEnabled: this.dynamoDBClient.config.sslEnabled,
             region: this.dynamoDBClient.config.region,
         });
-    }
-
-    async getAnyAvailablePort() : Promise<number> {
-        return getPort()
     }
 }

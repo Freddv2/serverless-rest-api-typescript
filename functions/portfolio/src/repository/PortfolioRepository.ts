@@ -9,9 +9,9 @@ export interface IPortfolioRepository {
 }
 
 export class PortfolioRepository implements IPortfolioRepository {
-    readonly documentClient : DocumentClient
-    readonly table : any
-    readonly entity : any
+    readonly documentClient: DocumentClient
+    readonly table: any
+    readonly entity: any
 
     constructor(documentClient: DocumentClient) {
         this.documentClient = documentClient
@@ -19,19 +19,23 @@ export class PortfolioRepository implements IPortfolioRepository {
         this.entity = this.createPortfolioEntity(this.table)
     }
 
-    async findById(tenantId :string, id: string) : Promise<Portfolio | undefined> {
-        const item = await this.documentClient.get({
-            TableName: TableDefinition.tableName,
+    async put(portfolio: Portfolio): Promise<any> {
+        await this.entity.put(portfolio)
+    }
+
+    async findById(tenantId: string, id: string): Promise<Portfolio | undefined> {
+        /*const item = await this.documentClient.get({
+            TableNmae: TableDefinition.tableName,
             Key : {
-                pk  : tenantId,
-                sk: id
+                [TableDefinition.pk]: tenantId,
+                [TableDefinition.sk]: id
             }
-        }).promise()
-        return item.Item ? JSON.parse(JSON.stringify(item.Item)) : undefined
-        /*return await this.entity.get({
+        }).promise()*/
+        const result = await this.entity.get({
             tenantId: tenantId,
             id: id
-        }) as Portfolio | undefined;*/
+        })
+        return result.Item
     }
         /*let result = await this.documentClient.get({
             TableName: this.tableName,
