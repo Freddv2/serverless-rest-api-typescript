@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@dv2/table-definition": "^1.0.0",
+    "@dv2/dynamodb": "^1.0.0",
     "@types/get-port": "^4.2.0",
     "dynamodb-local": "^0.0.31",
     "get-port": "^5.1.1",

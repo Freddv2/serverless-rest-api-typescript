@@ -4,13 +4,12 @@ import {eventContext} from "aws-serverless-express/middleware";
 import {PortfolioRepository} from "./repository/PortfolioRepository";
 import {PortfolioService} from "./service/PortfolioService";
 import {PortfolioController} from "./controller/PortfolioController";
-import {EnvironmentCredentials} from "aws-sdk";
-import DynamoDB, {DocumentClient} from "aws-sdk/clients/dynamodb";
+import {DynamoDBClient} from "@dv2/dynamodb/src/DynamoDBClient";
 
-const dynamodb = initDynamoDB()
+const documentClient = new DynamoDBClient().documentClient
 const app = initExpress();
 
-const repo = new PortfolioRepository(dynamodb)
+const repo = new PortfolioRepository(documentClient)
 const service = new PortfolioService(repo)
 const controller = new PortfolioController(app, service)
 
@@ -36,14 +35,6 @@ function initExpress() : Express {
     app.use(eventContext())
 
     return app;
-}
-
-function initDynamoDB() : DocumentClient {
-    return new DynamoDB.DocumentClient({
-        endpointDiscoveryEnabled: false,
-        credentials: new EnvironmentCredentials('AWS'),
-        endpoint: 'http://dynamodb.ca-central-1.amazonaws.com',
-    })
 }
 
 export {app}

@@ -1,6 +1,0 @@
-{
-  "name": "@dv2/table-definition",
-  "description": "The dynamodb table definition of the application",
-  "version": "1.0.0",
-  "private": true
-}

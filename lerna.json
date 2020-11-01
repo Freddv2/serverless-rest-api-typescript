@@ -2,9 +2,9 @@
   "npmClient": "yarn",
   "useWorkspaces": true,
   "packages": [
-    "functions/*/**/*",
-    "libs/*/**/*",
-    "tests/**/*"
+    "functions/*",
+    "libs/*",
+    "tests/*"
   ],
   "version": "0.0.0"
 }
