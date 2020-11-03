@@ -1,5 +1,3 @@
-import {Asset} from "./Asset";
-
 export interface Portfolio {
     tenantId: string
     id: string
@@ -10,3 +8,7 @@ export interface Portfolio {
     modified?: Date
 }
 
+export interface Asset {
+    symbol: string
+    weight: number
+}

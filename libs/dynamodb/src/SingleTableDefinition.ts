@@ -19,7 +19,7 @@ export class SingleTableDefinition {
         })
     }
 
-    defineEntity(name: string, attributes : any) : any {
+    createEntity(name: string, attributes : any) : any {
         return new Entity({
             name: name,
             attributes: attributes,

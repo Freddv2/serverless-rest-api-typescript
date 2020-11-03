@@ -1,9 +1,9 @@
 {
   "name": "@dv2/dynamodb",
-  "description": "The dynamodb table definition of the application",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@dv2/rest": "^1.0.0",
     "aws-sdk": "^2.783.0",
     "dynamodb-toolbox": "^0.2.0-beta.1"
   }

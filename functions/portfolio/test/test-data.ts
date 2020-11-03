@@ -1,4 +1,4 @@
-import {Portfolio} from "../src/domain/Portfolio";
+import {Portfolio} from "../src/entity";
 
 const testTenant = "TestTenant"
 const testPortfolio1: Portfolio = {

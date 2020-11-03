@@ -2,5 +2,8 @@
   "name": "@dv2/commons",
   "version": "1.0.0",
   "author": "fvincent",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@dv2/rest": "^1.0.0"
+  }
 }
