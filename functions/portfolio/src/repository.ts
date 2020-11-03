@@ -2,7 +2,7 @@ import {Portfolio} from "./entity";
 import {SingleTableDefinition} from "@dv2/dynamodb/src/SingleTableDefinition";
 import { DocumentClient } from "aws-sdk/lib/dynamodb/document_client";
 
-export class Repository {
+export class PortfolioRepository {
     readonly entity: any
     readonly tableDef: SingleTableDefinition
 

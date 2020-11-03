@@ -2,18 +2,18 @@ import {testPortfolio1} from "./test-data";
 import * as chai from 'chai';
 import {assert} from 'chai';
 import chaiExclude from 'chai-exclude';
-import {Repository} from "../src/repository";
+import {PortfolioRepository} from "../src/repository";
 import {LocalDynamoDBServer} from "@dv2/test-dynamodb/src/LocalDynamoDBServer";
 
 chai.use(chaiExclude)
 
 describe('Portfolio Repository', () => {
     let localDynamoDB: LocalDynamoDBServer
-    let portfolioRepository: Repository
+    let portfolioRepository: PortfolioRepository
 
     beforeAll(async () => {
         localDynamoDB = await new LocalDynamoDBServer().start()
-        portfolioRepository = new Repository(localDynamoDB.documentClient);
+        portfolioRepository = new PortfolioRepository(localDynamoDB.documentClient);
     })
 
     beforeEach(async () => {

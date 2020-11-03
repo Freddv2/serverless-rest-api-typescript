@@ -1,11 +1,11 @@
-import {Service} from "./service";
+import {PortfolioService} from "./service";
 import {Express, Request, Response} from "express";
 import {BaseController} from "@dv2/rest/src/controller";
 
-export class Controller extends BaseController {
-    readonly service : Service
+export class PortfolioController extends BaseController {
+    readonly service : PortfolioService
 
-    constructor(app: Express, service: Service) {
+    constructor(app: Express, service: PortfolioService) {
         super(app);
         this.service = service;
     }

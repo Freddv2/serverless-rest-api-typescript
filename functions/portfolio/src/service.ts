@@ -1,12 +1,12 @@
-import {Repository} from "./repository";
+import {PortfolioRepository} from "./repository";
 import {Result} from "@dv2/commons/src/Result";
 import {NotFoundError} from "@dv2/commons/src/Errors";
 import {Portfolio} from "./entity";
 
-export class Service {
-    readonly repo: Repository
+export class PortfolioService {
+    readonly repo: PortfolioRepository
 
-    constructor(portfolioRepository: Repository) {
+    constructor(portfolioRepository: PortfolioRepository) {
         this.repo = portfolioRepository;
     }
 

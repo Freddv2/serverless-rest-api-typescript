@@ -1,16 +1,16 @@
-import {Service} from "../src/service";
-import {Repository} from "../src/repository";
+import {PortfolioService} from "../src/service";
+import {PortfolioRepository} from "../src/repository";
 import {instance, mock, when} from "ts-mockito";
 import {assert} from "chai"
 import {testPortfolio1} from "./test-data";
 
 describe('Service', () => {
-    let mockedRepo : Repository
-    let service : Service
+    let mockedRepo : PortfolioRepository
+    let service : PortfolioService
 
     beforeAll(() => {
-        mockedRepo = mock(Repository);
-        service = new Service(instance(mockedRepo))
+        mockedRepo = mock(PortfolioRepository);
+        service = new PortfolioService(instance(mockedRepo))
     })
 
     it('should find by ID, when it exists', async () => {
