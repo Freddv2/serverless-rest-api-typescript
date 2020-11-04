@@ -10,7 +10,7 @@ export class PortfolioController extends BaseController {
         this.service = service;
     }
 
-    public defineRoutes() {
+    defineRoutes() {
         this.app.get('/portfolio/:tenantId/:id', this.findById);
     }
 

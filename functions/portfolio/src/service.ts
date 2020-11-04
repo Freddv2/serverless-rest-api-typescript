@@ -1,5 +1,5 @@
 import {PortfolioRepository} from "./repository";
-import {Result} from "@dv2/commons/src/Result";
+import {Result} from "@dv2/commons/src/result";
 import {NotFoundError} from "@dv2/commons/src/Errors";
 import {Portfolio} from "./entity";
 
