@@ -1,5 +1,5 @@
 import {EnvironmentCredentials} from "aws-sdk";
-import {DocumentClient} from "aws-sdk/lib/dynamodb/document_client";
+import {DocumentClient} from "aws-sdk/clients/dynamodb";
 
 export class DynamoDBClient {
     readonly documentClient : DocumentClient
