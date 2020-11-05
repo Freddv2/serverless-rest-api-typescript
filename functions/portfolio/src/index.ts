@@ -5,6 +5,7 @@ import {DynamoDBClient} from "@dv2/dynamodb/src/DynamoDBClient";
 import {PortfolioRepository} from "./repository";
 import {PortfolioService} from "./service";
 import {PortfolioController} from "./controller";
+import {eventContext} from "aws-serverless-express/middleware";
 
 //Init services
 const repo = new PortfolioRepository(new DynamoDBClient().documentClient)
@@ -12,6 +13,7 @@ const service = new PortfolioService(repo)
 const controller = new PortfolioController(app, service)
 
 //Init Server & Define routes
+app.use(eventContext())
 const server = createServer(app);
 controller.defineRoutes()
 

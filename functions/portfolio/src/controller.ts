@@ -14,13 +14,14 @@ export class PortfolioController extends BaseController {
         this.app.get('/portfolio/:tenantId/:id', this.findById);
     }
 
-    async findById(req: Request, res: Response) : Promise<void> {
+    //Has to use the arrow function definition so that `this` is binded to the class
+    findById = async (req: Request, res: Response): Promise<void> => {
         let tenantId = req.params["tenantId"]
         let id = req.params["id"]
 
         let portfolio = await this.service.findById(tenantId, id);
-        if(portfolio.isSuccess) {
-            this.ok(res,portfolio)
+        if (portfolio.isSuccess) {
+            this.ok(res, portfolio.getValue())
         } else {
             this.notFound(res)
         }
