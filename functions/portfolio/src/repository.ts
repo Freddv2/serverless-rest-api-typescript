@@ -4,11 +4,11 @@ import { DocumentClient } from "aws-sdk/lib/dynamodb/document_client";
 
 export class PortfolioRepository {
     readonly entity: any
-    readonly tableDef: SingleTableDefinition
+    readonly table: any
 
     constructor(documentClient: DocumentClient) {
-        this.tableDef = new SingleTableDefinition(documentClient)
-        this.entity = this.tableDef.createEntity('Portfolio',{
+        this.table = new SingleTableDefinition(documentClient).table
+        this.entity = this.table.createEntity('Portfolio',{
             tenantId: {partitionKey: true},
             id: {sortKey: true},
             name: {required: true},
@@ -27,5 +27,9 @@ export class PortfolioRepository {
             id: id
         })
         return result.Item
+    }
+
+    async findByName(tenantId: string, id: string): Promise<Portfolio | undefined> {
+
     }
 }
