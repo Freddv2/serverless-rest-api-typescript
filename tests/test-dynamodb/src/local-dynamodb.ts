@@ -3,6 +3,7 @@ import DynamoDB, {DocumentClient} from "aws-sdk/clients/dynamodb";
 import getPort from "get-port"
 import {ChildProcess} from "child_process";
 import kill from "tree-kill"
+import {SingleTableDefinition} from "@dv2/dynamodb/src/SingleTableDefinition";
 
 export class LocalDynamoDB {
     dynamoDBServer!: ChildProcess

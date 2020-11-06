@@ -3,8 +3,8 @@ import {PortfolioController} from "../src/controller";
 import {instance, mock, when} from "ts-mockito";
 import {app} from "../src/app";
 import {testPortfolio1} from "./test-data";
-import {Result} from "@dv2/commons/src/result";
 import supertest from "supertest";
+import {Result} from "@dv2/commons/src/result";
 
 describe('Controller', () => {
     let mockedService: PortfolioService

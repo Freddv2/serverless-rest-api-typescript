@@ -1,7 +1,6 @@
 import {PortfolioService} from "../src/service";
 import {PortfolioRepository} from "../src/repository";
 import {instance, mock, when} from "ts-mockito";
-import {assert} from "chai"
 import {testPortfolio1} from "./test-data";
 
 describe('Service', () => {
@@ -17,7 +16,7 @@ describe('Service', () => {
         when(mockedRepo.findById(testPortfolio1.tenantId,testPortfolio1.id))
             .thenResolve(testPortfolio1)
         let portfolio = await service.findById(testPortfolio1.tenantId,testPortfolio1.id);
-        assert.isTrue(portfolio.isSuccess)
-        assert.deepEqual(portfolio.getValue(),testPortfolio1)
+        expect(portfolio.isSuccess).toBe(true)
+        expect(portfolio.getValue()).toBe(testPortfolio1)
     })
 })

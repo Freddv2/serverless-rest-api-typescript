@@ -1,12 +1,7 @@
 import {testPortfolio1} from "./test-data";
-import * as chai from 'chai';
 import {assert} from 'chai';
-import chaiExclude from 'chai-exclude';
 import {PortfolioRepository} from "../src/repository";
 import {LocalDynamoDB} from "@dv2/test-dynamodb/src/local-dynamodb";
-
-
-chai.use(chaiExclude)
 
 describe('Portfolio Repository', () => {
     let localDynamoDB: LocalDynamoDB
@@ -29,8 +24,8 @@ describe('Portfolio Repository', () => {
     it('should return portfolio by id, when it exists', async () => {
         await portfolioRepository.put(testPortfolio1)
         const portfolio = await portfolioRepository.findById(testPortfolio1.tenantId, testPortfolio1.id)
-        assert.exists(portfolio)
-        assert.deepEqualExcluding(portfolio!,testPortfolio1,['created','modified'])
+        expect(portfolio).toBeDefined()
+        expect(portfolio).toEqual(expect.objectContaining(testPortfolio1))
     })
 
     afterEach(async () => {
