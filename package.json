@@ -30,5 +30,8 @@
     "ts-loader": "^8.0.4",
     "ts-mockito": "*",
     "typescript": "*"
+  },
+  "dependencies": {
+    "ksuid": "^2.0.0"
   }
 }

@@ -26,4 +26,8 @@ export class PortfolioController extends BaseController {
             this.notFound(res)
         }
     }
+
+    create = async (req: Request, res: Response) => {
+
+    }
 }

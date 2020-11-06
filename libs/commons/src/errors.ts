@@ -12,3 +12,11 @@ export class NotFoundError extends Result<AppError> {
         })
     }
 }
+
+export class AlreadyExistsError extends Result<AppError> {
+    public constructor (name: string) {
+        super(false, {
+            message: `ID "${name} already exists `,
+        })
+    }
+}
