@@ -1,5 +1,4 @@
 import {testPortfolio1} from "./test-data";
-import {assert} from 'chai';
 import {PortfolioRepository} from "../src/repository";
 import {LocalDynamoDB} from "@dv2/test-dynamodb/src/local-dynamodb";
 
@@ -18,7 +17,7 @@ describe('Portfolio Repository', () => {
 
     it('should return undefined, when no portfolio exists', async () => {
         const portfolio = await portfolioRepository.findById(testPortfolio1.tenantId, '999')
-        assert.isUndefined(portfolio)
+        expect(portfolio).toBeUndefined()
     })
 
     it('should return portfolio by id, when it exists', async () => {

@@ -29,7 +29,11 @@ export class PortfolioRepository {
         return result.Item
     }
 
-    async findByName(tenantId: string, id: string): Promise<Portfolio | undefined> {
-
+    async findByName(tenantId: string, name: string): Promise<Portfolio | undefined> {
+        const result = await this.table.query(tenantId,{
+            limit: 1,
+            filters: { attr: 'name', eq: name}
+        })
+        return result.Items ? result.Items[0] : undefined
     }
 }

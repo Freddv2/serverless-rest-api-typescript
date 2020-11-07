@@ -1,6 +1,7 @@
 import {PortfolioService} from "./service";
 import {Express, Request, Response} from "express";
 import {BaseController} from "@dv2/rest/src/controller";
+import {Portfolio} from "./entity";
 
 export class PortfolioController extends BaseController {
     readonly service : PortfolioService
@@ -11,15 +12,16 @@ export class PortfolioController extends BaseController {
     }
 
     defineRoutes() {
-        this.app.get('/portfolio/:tenantId/:id', this.findById);
+        this.app.get('/portfolio/:tenantId/:id', this.findById)
+        this.app.post('/portfolio/:tenantId', this.create)
     }
 
     //Has to use the arrow function definition so that `this` is binded to the class
-    findById = async (req: Request, res: Response): Promise<void> => {
-        let tenantId = req.params["tenantId"]
-        let id = req.params["id"]
+    findById = async (req: Request, res: Response) => {
+        const tenantId = req.params["tenantId"]
+        const id = req.params["id"]
 
-        let portfolio = await this.service.findById(tenantId, id);
+        const portfolio = await this.service.findById(tenantId, id);
         if (portfolio.isSuccess) {
             this.ok(res, portfolio.getValue())
         } else {
@@ -28,6 +30,13 @@ export class PortfolioController extends BaseController {
     }
 
     create = async (req: Request, res: Response) => {
+        const portfolio = req.body as Portfolio
 
+        const id = await this.service.create(portfolio)
+        if(id.isSuccess) {
+            this.ok(res, id.getValue())
+        } else {
+            this.conflict(res)
+        }
     }
 }
