@@ -1,10 +1,12 @@
-export class Result<T> {
-    isSuccess: boolean
-    isFailure: boolean
-    error?: T | string
-    private readonly _value?: T
+type AppError = Error | string
 
-    public constructor (isSuccess: boolean, error?: T | string , value?: T) {
+export class Result<T> {
+    readonly isSuccess: boolean
+    readonly isFailure: boolean
+    readonly error?: AppError
+    readonly value?: T
+
+    private constructor (isSuccess: boolean, error?: AppError | string , value?: T) {
         if (isSuccess && error) {
             throw new Error("InvalidOperation: A result cannot be successful and contain an error");
         }
@@ -16,23 +18,14 @@ export class Result<T> {
         this.isSuccess = isSuccess;
         this.isFailure = !isSuccess;
         this.error = error;
-        this._value = value;
-
-        Object.freeze(this);
-    }
-
-    public getValue () : T {
-        if (!this.isSuccess) {
-            return this.error as T;
-        }
-        return this._value as T;
+        this.value = value;
     }
 
     public static ok<U> (value?: U) : Result<U> {
         return new Result<U>(true, undefined, value);
     }
 
-    public static fail<U>(error: U): Result<U> {
+    public static fail<U extends Error | string>(error: U): Result<U> {
         return new Result<U>(false, error);
     }
 }

@@ -21,22 +21,22 @@ export class PortfolioController extends BaseController {
         const tenantId = req.params["tenantId"]
         const id = req.params["id"]
 
-        const portfolio = await this.service.findById(tenantId, id);
-        if (portfolio.isSuccess) {
-            this.ok(res, portfolio.getValue())
+        const result = await this.service.findById(tenantId, id);
+        if (result.isSuccess) {
+            this.ok(res, result.value)
         } else {
-            this.notFound(res)
+            this.notFound(res, result.error)
         }
     }
 
     create = async (req: Request, res: Response) => {
         const portfolio = req.body as Portfolio
 
-        const id = await this.service.create(portfolio)
-        if(id.isSuccess) {
-            this.ok(res, id.getValue())
+        const result = await this.service.create(portfolio)
+        if(result.isSuccess) {
+            this.ok(res, result.value)
         } else {
-            this.conflict(res)
+            this.conflict(res,result.error)
         }
     }
 }

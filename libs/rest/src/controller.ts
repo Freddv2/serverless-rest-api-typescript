@@ -10,7 +10,7 @@ export abstract class BaseController {
 
     public abstract defineRoutes() : void
 
-    protected static jsonResponse (res: express.Response, code: number, message: string) {
+    protected jsonResponse (res: express.Response, code: number, message: any) {
         return res.status(code).json({ message })
     }
 
@@ -33,10 +33,10 @@ export abstract class BaseController {
     protected created (res: express.Response) {
         return res.sendStatus(201);
     }
-    protected notFound (res: express.Response, message?: string) {
-        return BaseController.jsonResponse(res, 404, message ? message : 'Not found');
+    protected notFound (res: express.Response, message?: any) {
+        return this.jsonResponse(res, 404, message ? message : 'Not found');
     }
-    protected conflict (res: express.Response, message?: string) {
-        return BaseController.jsonResponse(res, 409, message ? message : 'Conflict');
+    protected conflict (res: express.Response, message?: any) {
+        return this.jsonResponse(res, 409, message ? message : 'Conflict');
     }
 }

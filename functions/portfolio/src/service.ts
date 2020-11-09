@@ -21,9 +21,8 @@ export class PortfolioService {
     }
 
     async create(portfolio : Portfolio) : Promise<Result<String> | Result<AlreadyExistsError>> {
-
         if(await this.portfolioExists(portfolio.tenantId, portfolio.name)) {
-            return Result.fail<AlreadyExistsError>()
+            return Result.fail(new AlreadyExistsError(portfolio.name))
         }
 
         const ksuid = await KSUID.random()

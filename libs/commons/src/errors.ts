@@ -1,36 +1,15 @@
-interface AppError {
+export class NotFoundError implements Error{
+    name= 'NOT_FOUND'
     message: string;
-    error?: any;
+    public constructor (id: string) {
+        this.message =`ID "${id} not found`
+    }
 }
 
-export interface NotFoundError extends AppError {
-    public
-
-    constructor(id: string)
-
-{
-    this
-    .
-    message
-    = `ID "${
-    id
-}
-
- not found
-`
-}
-}
-
-export class AlreadyExistsError extends Result<AppError> {
-public constructor (name: string) {
-super(false, {
-message: `
-ID "$
-{
-    name
-}
- already exists
-`,
-})
-}
+export class AlreadyExistsError implements Error {
+    name= 'ALREADY_EXISTS'
+    message: string;
+    public constructor (name: string) {
+        this.message =`ID "${name} already exists`
+    }
 }
