@@ -1,12 +1,11 @@
 type AppError = Error | string
-
 export class Result<T> {
     readonly isSuccess: boolean
     readonly isFailure: boolean
     readonly error?: AppError
     readonly value?: T
 
-    private constructor (isSuccess: boolean, error?: AppError | string , value?: T) {
+    private constructor (isSuccess: boolean, error?: AppError, value?: T) {
         if (isSuccess && error) {
             throw new Error("InvalidOperation: A result cannot be successful and contain an error");
         }
@@ -21,11 +20,11 @@ export class Result<T> {
         this.value = value;
     }
 
-    public static ok<U> (value?: U) : Result<U> {
+    public static ok<U> (value?: U) {
         return new Result<U>(true, undefined, value);
     }
 
-    public static fail<U extends Error | string>(error: U): Result<U> {
+    public static fail<U extends AppError>(error: U) {
         return new Result<U>(false, error);
     }
 }
