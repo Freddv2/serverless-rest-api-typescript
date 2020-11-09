@@ -15,7 +15,6 @@ export class PortfolioCRUDRestAPI extends Construct {
         new LambdaRestApi(this, id + '-API', {
             handler: func
         });
-
         new Table(this, 'Table', {
             tableName: 'PORTFOLIO',
             partitionKey: {name: 'tenantId', type: AttributeType.STRING},
