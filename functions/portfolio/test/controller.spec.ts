@@ -28,7 +28,7 @@ describe('Controller', () => {
 
     it("should return 404, when finding portfolio by ID and doesn't exists", async () => {
         when(mockedService.findById(testPortfolio1.tenantId, testPortfolio1.id))
-            .thenResolve(Result.fail<NotFoundError>('Portfolio not found'));
+            .thenResolve(Result.fail(new NotFoundError(testPortfolio1.id)));
         const resp = await request.get(`/portfolio/${testPortfolio1.tenantId}/${testPortfolio1.id}`)
         expect(resp.status).toBe(404)
     })
@@ -46,7 +46,7 @@ describe('Controller', () => {
 
     it("should return 409, when creating portfolio that already exists", async () => {
         when(mockedService.create(deepEqual(testPortfolio1)))
-            .thenResolve(Result.fail<AlreadyExistsError>('Already exists'))
+            .thenResolve(Result.fail(new AlreadyExistsError(testPortfolio1.name)))
         const resp = await request
             .post(`/portfolio/${testPortfolio1.tenantId}`)
             .send(testPortfolio1)

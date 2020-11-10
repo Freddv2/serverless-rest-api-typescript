@@ -1,14 +1,14 @@
 import {Portfolio} from "./entity";
 import {SingleTableDefinition} from "@dv2/dynamodb/src/SingleTableDefinition";
-import { DocumentClient } from "aws-sdk/lib/dynamodb/document_client";
+import {DocumentClient} from "aws-sdk/lib/dynamodb/document_client";
 
 export class PortfolioRepository {
     readonly entity: any
     readonly table: any
 
     constructor(documentClient: DocumentClient) {
-        this.table = new SingleTableDefinition(documentClient).table
-        this.entity = this.table.createEntity('Portfolio',{
+        this.table = new SingleTableDefinition(documentClient)
+        this.entity = this.table.createEntity('Portfolio', {
             tenantId: {partitionKey: true},
             id: {sortKey: true},
             name: {required: true},
