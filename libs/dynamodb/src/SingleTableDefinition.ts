@@ -14,7 +14,6 @@ export class SingleTableDefinition {
             name: SingleTableDefinition.tableName,
             partitionKey: SingleTableDefinition.pk,
             sortKey: SingleTableDefinition.sk,
-            entityField: false,
             DocumentClient: documentClient
         })
     }

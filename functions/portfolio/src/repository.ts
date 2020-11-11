@@ -7,14 +7,15 @@ export class PortfolioRepository {
     readonly table: any
 
     constructor(documentClient: DocumentClient) {
-        this.table = new SingleTableDefinition(documentClient)
-        this.entity = this.table.createEntity('Portfolio', {
+        const tableDef = new SingleTableDefinition(documentClient)
+        this.entity = tableDef.createEntity('Portfolio', {
             tenantId: {partitionKey: true},
             id: {sortKey: true},
             name: {required: true},
             description: {},
             assets: {type: 'list'}
         })
+        this.table = tableDef.table
     }
 
     async put(portfolio: Portfolio): Promise<void> {
@@ -35,5 +36,22 @@ export class PortfolioRepository {
             filters: { attr: 'name', eq: name}
         })
         return result.Items ? result.Items[0] : undefined
+    }
+
+    async findAllByTenant(tenantId: string) : Promise<Portfolio[]> {
+        return await this.table.query(tenantId)
+    }
+
+    async findLikeName(tenantId: string, name: string) : Promise<Portfolio[]>{
+        return await this.table.query(tenantId,{
+            filters: { attr: 'name', contains: name}
+        })
+    }
+
+    async delete(tenantId: string, id: string): Promise<void> {
+        return await this.entity.delete({
+            tenantId: tenantId,
+            id: id
+        })
     }
 }

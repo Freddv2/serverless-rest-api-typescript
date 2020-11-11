@@ -27,6 +27,17 @@ describe('Portfolio Repository', () => {
         expect(portfolio).toEqual(expect.objectContaining(testPortfolio1))
     })
 
+    it("should create portfolio",async () => {
+        await portfolioRepository.put(testPortfolio1);
+    })
+
+    it("should find by name", async () => {
+        await portfolioRepository.put(testPortfolio1)
+        const portfolio = await portfolioRepository.findByName(testPortfolio1.tenantId,testPortfolio1.name)
+        expect(portfolio).toBeDefined()
+        expect(portfolio).toEqual(expect.objectContaining(testPortfolio1))
+    })
+
     afterEach(async () => {
         await localDynamoDB.deleteTableIfExists()
     })
