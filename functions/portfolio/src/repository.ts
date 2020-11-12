@@ -39,13 +39,15 @@ export class PortfolioRepository {
     }
 
     async findAllByTenant(tenantId: string) : Promise<Portfolio[]> {
-        return await this.table.query(tenantId)
+        const result = await this.table.query(tenantId)
+        return result.Items
     }
 
     async findLikeName(tenantId: string, name: string) : Promise<Portfolio[]>{
-        return await this.table.query(tenantId,{
-            filters: { attr: 'name', contains: name}
+        const result = await this.table.query(tenantId, {
+            filters: {attr: 'name', contains: name}
         })
+        return result.Items
     }
 
     async delete(tenantId: string, id: string): Promise<void> {
